@@ -1,62 +1,48 @@
-// A Java program for a Server
-import java.net.*;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.PrintStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.ServerSocket;
 
-public class Server
-{
-	//initialize socket and input stream
-	private Socket		 socket = null;
-	private ServerSocket server = null;
-	private DataInputStream in	 = null;
+public class Server {
 
-	// constructor with port
-	public Server(int port)
-	{
-		// starts server and waits for a connection
-		try
-		{
-			server = new ServerSocket(port);
-			System.out.println("Server started");
+    private static ServerSocket serverSocket = null;
+    private static Socket clientSocket = null;
 
-			System.out.println("Waiting for a client ...");
+    private static final int maxClients = 10;
+    private static final ServerThread[] clients = new ServerThread[maxClients];
 
-			socket = server.accept();
-			System.out.println("Client accepted");
+    public static void main(String args[]) {
 
-			// takes input from the client socket
-			in = new DataInputStream(
-				new BufferedInputStream(socket.getInputStream()));
+        int portNumber = 2222;
 
-			String line = "";
+        try {
+            serverSocket = new ServerSocket(portNumber);
+        }
+        catch (IOException i) {
+            System.err.println(i);
+        }
 
-			// reads message from client until "Over" is sent
-			while (!line.equals("Over"))
-			{
-				try
-				{
-					line = in.readUTF();
-					System.out.println(line);
-
-				}
-				catch(IOException i)
-				{
-					System.out.println(i);
-				}
-			}
-			System.out.println("Closing connection");
-
-			// close connection
-			socket.close();
-			in.close();
-		}
-		catch(IOException i)
-		{
-			System.out.println(i);
-		}
-	}
-
-	public static void main(String args[])
-	{
-		Server server = new Server(21069);
-	}
+        while (true) {
+            try {
+                clientSocket = serverSocket.accept();
+                int i = 0;
+                for (i = 0; i < maxClients; i++) {
+                    if (clients[i] == null) {
+                        (clients[i] = new ServerThread(clientSocket, clients)).start();
+                        break;
+                    }
+                }
+                if (i == maxClients) {
+                    PrintStream os = new PrintStream(clientSocket.getOutputStream());
+                    os.println("Server too busy. Try later.");
+                    os.close();
+                    clientSocket.close();
+                }
+            }
+            catch (IOException e) {
+                System.err.println(e);
+            }
+        }
+    }
 }

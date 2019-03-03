@@ -9,11 +9,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ClientGUI 
-{
+public class ClientGUI {
 
-	public ClientGUI()
-	{
+	public ClientGUI() {
 		JFrame client = new JFrame();
 
 		client.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,10 +21,9 @@ public class ClientGUI
 		client.setVisible(true);
 	}
 
-	class LoginDialog()
-	{
-		public LoginDialog()
-		{
+	class LoginDialog() {
+
+		public LoginDialog() {
 			JFrame login = new JFrame();
 
 			login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,8 +46,7 @@ public class ClientGUI
 		}
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		
 	}
 }
