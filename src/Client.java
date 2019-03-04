@@ -13,59 +13,64 @@ public class Client implements Runnable {
     private static DataInputStream is = null;
 
     private static BufferedReader input = null;
-    private static boolean closed = false;
+    private static boolean isClosed = false;
+
+    
     
     public static void main(String[] args) {
 
-    int portNumber = 2222;
-    String host = "localhost";
+        int portNumber = 2222;
+        String host = "localhost";
 
-    try {
-        clientSocket = new Socket(host, portNumber);
-        input = new BufferedReader(new InputStreamReader(System.in));
-        os = new PrintStream(clientSocket.getOutputStream());
-        is = new DataInputStream(clientSocket.getInputStream());
-    }
-    catch (UnknownHostException u) {
-        System.err.println(u);
-    }
-    catch (IOException i) {
-        System.err.println(i);
-    }
-
-    if (clientSocket != null && os != null && is != null) {
         try {
+            clientSocket = new Socket(host, portNumber);
+            input = new BufferedReader(new InputStreamReader(System.in));
+            os = new PrintStream(clientSocket.getOutputStream());
+            is = new DataInputStream(clientSocket.getInputStream());
+
             new Thread(new Client()).start();
 
             String line;
-            while (!closed) {
+            while (!isClosed) {
                 line = input.readLine().trim();
                 os.println(line);
             }
-
-        os.close();
-        is.close();
-        clientSocket.close();
         }
-        catch (IOException e) {
-            System.err.println("IOException:  " + e);
+        catch (UnknownHostException u) {
+            System.err.println(u);
+        }
+        catch (IOException i) {
+            System.err.println(i);
+        }
+        finally {
+            close();
         }
     }
-  }
+
+    public static void close() {
+        try {
+            if (is != null)             is.close();
+            if (os != null)             os.close();
+            if (clientSocket != null)   clientSocket.close();
+        }
+        catch (IOException i) {
+            System.err.println(i);
+        }
+    }
 
     public void run() {
 
-        String responseLine;
+        String response;
         try {
-            while ((responseLine = is.readLine()) != null) {
-                System.out.println(responseLine);
-                if (responseLine.indexOf("*** Bye") != -1)
+            while ((response = is.readLine()) != null) {
+                System.out.println(response);
+                if (response.indexOf("<< Bye") != -1)
                     break;
             }
-            closed = true;
+            isClosed = true;
         }
-        catch (IOException e) {
-            System.err.println("IOException:  " + e);
+        catch (IOException i) {
+            System.err.println(i);
         }
     }
 }
