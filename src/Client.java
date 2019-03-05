@@ -13,14 +13,21 @@ public class Client implements Runnable {
     private static DataInputStream is = null;
 
     private static BufferedReader input = null;
-    private static boolean isClosed = false;
+    private static boolean isClosed = false; // is client closed by server
 
-    
-    
+    // default port number for application
+    private static int portNumber = 2222;
+    private static String host = "localhost";
+
     public static void main(String[] args) {
-
-        int portNumber = 2222;
-        String host = "localhost";
+        // takes host ip from user, otherwise uses localhost as default
+        if (args.length < 1) {
+            System.out.println("Attempting to connect to default host: " + host);
+        }
+        else {
+            System.out.println("Attempting to connect to host: " + args[0]);
+            host = args[0];
+        }
 
         try {
             clientSocket = new Socket(host, portNumber);
@@ -28,8 +35,10 @@ public class Client implements Runnable {
             os = new PrintStream(clientSocket.getOutputStream());
             is = new DataInputStream(clientSocket.getInputStream());
 
+            // start client in thread to listen to server responses
             new Thread(new Client()).start();
 
+            // client sends user input to server in this thread
             String line;
             while (!isClosed) {
                 line = input.readLine().trim();
@@ -59,7 +68,7 @@ public class Client implements Runnable {
     }
 
     public void run() {
-
+        // listens for responses to know when to close client
         String response;
         try {
             while ((response = is.readLine()) != null) {

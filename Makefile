@@ -20,10 +20,10 @@ CLASS_FILES=$(CLASSES:%.class=$(BINDIR)/%.class)
 default: $(CLASS_FILES)
 
 runserver:
-	java $(BINDIR)/Server
+	java -cp bin Server
 
 runclient:
-	java $(BINDIR)/Client
+	java -cp bin Client
 
 javadocs:
 	javadoc -d $(DOCDIR) $(SRCDIR)/*.java
