@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Login{
@@ -10,6 +11,19 @@ public class Login{
 
     public static void RegisterNewUser(String name, String password){
         ListOfUsers.add(new User(name,password));
+        BufferedWriter bw = null;
+        try{
+            bw = new BufferedWriter(new FileWriter("db.txt",true));
+            String line = null;
+            bw.write(name+"\n");
+            bw.write(password+"\n");
+            bw.write("\n");
+            bw.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
     }
 
     public static boolean ValidateLogin(String name, String password){

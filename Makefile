@@ -13,7 +13,7 @@ DOCDIR=doc
 $(BINDIR)/%.class: $(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-CLASSES=ServerThread.class Server.class Client.class
+CLASSES=ServerThread.class Server.class Client.class User.class Login.class
 
 CLASS_FILES=$(CLASSES:%.class=$(BINDIR)/%.class)
 
