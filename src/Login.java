@@ -26,6 +26,18 @@ public class Login{
 
     }
 
+    public static boolean UsernameTaken(String username){
+        for(int i = 0; i < ListOfUsers.size(); i++){
+            if(username.equals(ListOfUsers.get(i).getName())){
+                return true;
+            }
+            else{
+                continue;
+            }
+        }
+        return false;
+    }
+
     public static boolean ValidateLogin(String name, String password){
         for(int i = 0; i < ListOfUsers.size(); i++){
             if(name.equals(ListOfUsers.get(i).getName()) && password.equals(ListOfUsers.get(i).getPassword())){

@@ -38,7 +38,7 @@ public class ServerThread extends Thread {
 			os = new PrintStream(clientSocket.getOutputStream());
 
 			String line;
-
+			Login.loadUsers();
 			while (true) {
 				os.println("Do you want to Log in (L) or Sign up (S)");
 				String password;
@@ -57,35 +57,43 @@ public class ServerThread extends Thread {
 						os.println("Enter your password:");
 						password = (is.readLine());
 
-						// TODO: user validation here
+						Login.RegisterNewUser(username,password);
 						break;
 					}
 					else {
 						os.println("Username cannot contain '@'");
 					}
 				}
-				//login 
-				if else (line.equalsIgnoreCase("L")) {
+				//login
+				else if (line.equalsIgnoreCase("L")) {
 					os.println("Enter your username:");
 					line = is.readLine();
 
-					// TODO: validate username exists
+					if(!Login.UsernameTaken(line)){
+						os.println("Enter your password:");
+						password = (is.readLine());
 
-					os.println("Enter your password:");
-					password = (is.readLine());
-
-					// TODO: validation
-
-					break;
+						if(Login.ValidateLogin(line,password)){
+							break;
+						}
+						else{
+							os.println("Username/passwork was incorrect, try again.");
+							continue;
+						}
+					}
+					else{
+						os.println("Username was taken, try again.");
+						continue;
+					}
 				}
-				
+
 			}
-      
+
       		os.println("Welcome to NetChatter, " + username + "!\n"
       			+ "To logout enter 'EXIT' on a new line\n"
       			+ "To see who is in the chatroom enter 'WHOISHERE' on a new line\n"
       			+ "To send a private message type '@username' followed by your message");
-      
+
 	      	while (true) {
 	        	line = is.readLine();
 
@@ -103,7 +111,7 @@ public class ServerThread extends Thread {
 			            	}
 			          	}
 			        }
-	        	}	
+	        	}
 
 	        	// user attempts to send a private message to client connected to server
 	        	else if (line.startsWith("@")) {

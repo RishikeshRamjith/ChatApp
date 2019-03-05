@@ -25,6 +25,7 @@ public class Server {
 
                 // run ServerThread for newly connected client in a new thread and start thread
                 int i = 0;
+                Login.loadUsers();
                 for (i = 0; i < maxClients; i++) {
                     if (clients[i] == null) {
                         (clients[i] = new ServerThread(clientSocket, clients)).start();
