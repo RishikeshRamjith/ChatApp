@@ -38,18 +38,47 @@ public class ServerThread extends Thread {
 			os = new PrintStream(clientSocket.getOutputStream());
 
 			String line;
+
 			while (true) {
-				// gets username from client
-				os.println("Enter your username:");
+				os.println("Do you want to Log in (L) or Sign up (S)");
+				String password;
+
 				line = is.readLine();
 
-				if (line.indexOf("@") == -1) {
-					username = line;
+				// sign up
+				if (line.equalsIgnoreCase("S")) {
+					// gets username from client
+					os.println("Enter your username:");
+					line = is.readLine();
+
+					if (line.indexOf("@") == -1) {
+						username = line;
+
+						os.println("Enter your password:");
+						password = (is.readLine());
+
+						// TODO: user validation here
+						break;
+					}
+					else {
+						os.println("Username cannot contain '@'");
+					}
+				}
+				//login 
+				if else (line.equalsIgnoreCase("L")) {
+					os.println("Enter your username:");
+					line = is.readLine();
+
+					// TODO: validate username exists
+
+					os.println("Enter your password:");
+					password = (is.readLine());
+
+					// TODO: validation
+
 					break;
 				}
-				else {
-					os.println("Username cannot contain '@'");
-				}
+				
 			}
       
       		os.println("Welcome to NetChatter, " + username + "!\n"
