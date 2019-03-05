@@ -9,7 +9,7 @@ public class Server {
     private static ServerSocket serverSocket = null;
     private static Socket clientSocket = null;
 
-    private static final int portNumber = 2222;
+    private static final int portNumber = 21069;
     private static final int maxClients = 10; // maximum number of clients allowed to connect to server at once
     private static final ServerThread[] clients = new ServerThread[maxClients];
 
