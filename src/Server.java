@@ -17,7 +17,12 @@ public class Server {
         // takes desired port number, otherwise default
         if (args.length == 1) {
             System.out.println("Attempting to start server on port: " + args[0]);
-            portNumber = Integer.parseInt(args[0]);
+            try {
+                portNumber = Integer.parseInt(args[0]);
+            }
+            catch (Exception e) {
+                throw new IllegalArgumentException("Port number invalid");
+            }
         }
         else if (args.length == 0) {
             System.out.println("Attempting to start server on default port: " + portNumber);

@@ -24,16 +24,27 @@ public class Client implements Runnable {
         if (args.length == 2) {
             System.out.println("Attempting to connect to host: " + args[0]
                 + "; on port: " + args[1] );
-            host = args[0];
-            portNumber = Integer.parseInt(args[1]);
+            try {
+                host = args[0];
+                portNumber = Integer.parseInt(args[1]);
+            }
+            catch (Exception e) {
+                throw new IllegalArgumentException("Should be in form: java Client <host-ip> <port-no>");
+            }
         }
         else if (args.length == 1) {
-            System.out.println("Attempting to connect to host: " + args[0]
-                + "; on port: " + args[1] );
-            host = args[0];
+            try {
+                portNumber = Integer.parseInt(args[0]);
+            }
+            catch (Exception e) {
+                host = args[0];
+            }
+            System.out.println("Attempting to connect to host: " + host
+                + "; on port: " + portNumber );            
         }
         else if (args.length == 0) {
-            System.out.println("Attempting to connect to default host: " + host);
+            System.out.println("Attempting to connect to default host: "
+                + host + "; on default port: " + portNumber);
         }
         else {
             throw new IllegalArgumentException("Too many arguments. "
