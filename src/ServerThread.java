@@ -53,12 +53,16 @@ public class ServerThread extends Thread {
 
 					if (line.indexOf("@") == -1) {
 						username = line;
-
-						os.println("Enter your password:");
-						password = (is.readLine());
-
-						Login.RegisterNewUser(username,password);
-						break;
+						if(!Login.UsernameTaken(username)){
+							os.println("Enter your password:");
+							password = (is.readLine());
+							Login.RegisterNewUser(username,password);
+							break;
+						}
+						else{
+							System.out.println("Username taken, try again.");
+							continue;
+						}
 					}
 					else {
 						os.println("Username cannot contain '@'");
@@ -68,21 +72,13 @@ public class ServerThread extends Thread {
 				else if (line.equalsIgnoreCase("L")) {
 					os.println("Enter your username:");
 					line = is.readLine();
-
-					if(!Login.UsernameTaken(line)){
-						os.println("Enter your password:");
-						password = (is.readLine());
-
-						if(Login.ValidateLogin(line,password)){
-							break;
-						}
-						else{
-							os.println("Username/passwork was incorrect, try again.");
-							continue;
-						}
+					os.println("Enter your password:");
+					password = (is.readLine());
+					if(Login.ValidateLogin(line,password)){
+						break;
 					}
 					else{
-						os.println("Username was taken, try again.");
+						os.println("Username/passwork was incorrect, try again.");
 						continue;
 					}
 				}
