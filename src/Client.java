@@ -20,13 +20,24 @@ public class Client implements Runnable {
     private static String host = "localhost";
 
     public static void main(String[] args) {
-        // takes host ip from user, otherwise uses localhost as default
-        if (args.length < 1) {
+        // takes host ip and port number from user, otherwise uses default
+        if (args.length == 2) {
+            System.out.println("Attempting to connect to host: " + args[0]
+                + "; on port: " + args[1] );
+            host = args[0];
+            portNumber = args[1];
+        }
+        else if (args.length == 1) {
+            System.out.println("Attempting to connect to host: " + args[0]
+                + "; on port: " + args[1] );
+            host = args[0];
+        }
+        else if (args.length == 0) {
             System.out.println("Attempting to connect to default host: " + host);
         }
         else {
-            System.out.println("Attempting to connect to host: " + args[0]);
-            host = args[0];
+            throw new IllegalArgumentException("Too many arguments. "
+                + "Should be in form: java Client <host-ip> <port-no>");
         }
 
         try {

@@ -14,6 +14,19 @@ public class Server {
     private static final ServerThread[] clients = new ServerThread[maxClients];
 
     public static void main(String args[]) {
+        // takes desired port number, otherwise default
+        if (args.length == 1) {
+            System.out.println("Attempting to start server on port: " + args[0]);
+            portNumber = args[0];
+        }
+        else if (args.length == 0) {
+            System.out.println("Attempting to start server on default port: " + portNumber);
+        }
+        else {
+            throw new IllegalArgumentException("Too many arguments. "
+                + "Should be in form: java Server <port-no>");
+        }
+        
         try {
             serverSocket = new ServerSocket(portNumber);
 

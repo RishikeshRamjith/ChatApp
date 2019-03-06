@@ -1,3 +1,5 @@
 #!/bin/bash
 cd bin/
-java Server
+echo Type port number (leave blank for default)
+read port
+java Server $port
