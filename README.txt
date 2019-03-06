@@ -1,2 +1,7 @@
-first run the make command in this directory
-then run bash runClient.sh
+Steps:
+
+1. Run 'make' command in current directory
+
+2. Run 'bash runServer.sh' to start the Server
+
+3. Run 'bash runClient.sh' to start a Client to connect to the server
