@@ -61,12 +61,12 @@ public class ServerThread extends Thread {
 							break;
 						}
 						else {
-							os.println("Username taken, try again.");
+							os.println("<< Username taken, try again >>");
 							continue;
 						}
 					}
 					else {
-						os.println("Username cannot contain '@'");
+						os.println("<< Username cannot contain '@' >>");
 					}
 				}
 				//login
@@ -80,13 +80,13 @@ public class ServerThread extends Thread {
 						break;
 					}
 					else {
-						os.println("Username/passwork was incorrect, try again.");
+						os.println("<< Username/password was incorrect, try again >>");
 						continue;
 					}
 				}
 			}
 
-      		os.println("Welcome to NetChatter, " + username + "!\n"
+      		os.println("\n<< Welcome to NetChatter, " + username + "! >>\n"
       			+ "To logout enter 'EXIT' on a new line\n"
       			+ "To see who is in the chatroom enter 'WHOISHERE' on a new line\n"
       			+ "To send a private message type '@username' followed by your message\n"
