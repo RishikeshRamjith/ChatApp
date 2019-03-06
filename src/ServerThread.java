@@ -60,7 +60,7 @@ public class ServerThread extends Thread {
 							break;
 						}
 						else{
-							System.out.println("Username taken, try again.");
+							os.println("Username taken, try again.");
 							continue;
 						}
 					}
