@@ -140,7 +140,9 @@ public class ServerThread extends Thread {
 					              		castMessage(clients[i], "<" + username + "> " + msg);
 					              		sent = true;
 					              		castMessage(this, "<< Message sent >>");
-					              		break;
+					            	}
+					            	else if (clients[i] != null && clients[i].username.equals(admin)) {
+					            		castMessage(clients[i], "<" + username + "> @" + receiver + " " + msg);
 					            	}
 					          	}
 					        }
