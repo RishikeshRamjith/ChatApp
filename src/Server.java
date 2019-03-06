@@ -9,7 +9,7 @@ public class Server {
     private static ServerSocket serverSocket = null;
     private static Socket clientSocket = null;
 
-    private static final int portNumber = 12069;
+    private static int portNumber = 2222;
     private static final int maxClients = 10; // maximum number of clients allowed to connect to server at once
     private static final ServerThread[] clients = new ServerThread[maxClients];
 
@@ -17,7 +17,7 @@ public class Server {
         // takes desired port number, otherwise default
         if (args.length == 1) {
             System.out.println("Attempting to start server on port: " + args[0]);
-            portNumber = args[0];
+            portNumber = Integer.parseInt(args[0]);
         }
         else if (args.length == 0) {
             System.out.println("Attempting to start server on default port: " + portNumber);
@@ -26,9 +26,11 @@ public class Server {
             throw new IllegalArgumentException("Too many arguments. "
                 + "Should be in form: java Server <port-no>");
         }
-        
+
         try {
             serverSocket = new ServerSocket(portNumber);
+
+            System.out.println("Server started");
 
             while (true) {
                 clientSocket = serverSocket.accept(); // listen for clients

@@ -25,7 +25,7 @@ public class Client implements Runnable {
             System.out.println("Attempting to connect to host: " + args[0]
                 + "; on port: " + args[1] );
             host = args[0];
-            portNumber = args[1];
+            portNumber = Integer.parseInt(args[1]);
         }
         else if (args.length == 1) {
             System.out.println("Attempting to connect to host: " + args[0]
@@ -60,6 +60,7 @@ public class Client implements Runnable {
             System.err.println(u);
         }
         catch (IOException i) {
+            System.out.println("Connection to server lost");
             System.err.println(i);
         }
         finally {

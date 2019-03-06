@@ -2,7 +2,7 @@
 ## Zainab Adjiet
 ## 28-03-2018
 
-JAVAC=javac
+JAVAC=javac --release 8
 
 .SUFFIXES: .java .class
 
@@ -18,12 +18,6 @@ CLASSES=User.class Login.class ServerThread.class Server.class Client.class
 CLASS_FILES=$(CLASSES:%.class=$(BINDIR)/%.class)
 
 default: $(CLASS_FILES)
-
-runserver:
-	java -cp bin Server
-
-runclient:
-	java -cp bin Client
 
 javadocs:
 	javadoc -d $(DOCDIR) $(SRCDIR)/*.java
